@@ -1,16 +1,23 @@
 import requests
 from bs4 import BeautifulSoup
 
+LOAD = {
+    "from": "/bbs/Gossiping/index.html",
+    "yes": "yes"
+}
 
 # Define the Web Scraper
 def fetch_data(board, chosen_date):
     base_url = f"https://www.ptt.cc/bbs/{board}/index.html"
     response = requests.get(url=base_url,verify=False)
+    print(response.text)
     soup = BeautifulSoup(response.content, "html.parser")
 
     # Extract posts
     posts = soup.find_all("div", class_="r-ent")
-    print(posts)
+
+    for post in posts:
+        print(post.text.encode("utf-8"))
 
     filtered_data = []
     for post in posts:
